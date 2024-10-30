@@ -9,7 +9,7 @@ export default function Home() {
           <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
             <div className="relative mx-auto text-center lg:text-left flex flex-col items-center lg:items-start">
               <div className="absolute w-28 left-0 -top-20 hidden lg:block">
-                <img src="/public/snake.svg" className="w-full" />
+                <img src="/snake.svg" className="w-full" />
               </div>
               <h1>Your Image on a <span>Custom</span> Phone Case</h1>
             </div>
