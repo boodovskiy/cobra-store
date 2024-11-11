@@ -52,9 +52,6 @@ type Action =
       toastId?: ToasterToast["id"]
     }
 
-    // Example runtime usage to avoid lint error:
-console.log("Action types available:", Object.values(actionTypes));
-
 interface State {
   toasts: ToasterToast[]
 }
