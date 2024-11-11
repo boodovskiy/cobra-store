@@ -4,21 +4,50 @@ import { Progress } from '@/components/ui/progress'
 import { useUploadThing } from '@/lib/uploadthing'
 import { cn } from '@/lib/utils'
 import { Image, Loader2Icon, MousePointerSquareDashed } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
-import Dropzone from 'react-dropzone'
+import Dropzone, { FileRejection } from 'react-dropzone'
 
 const Page = () => {
     const [isDragOver, setIsDragOver] = useState<boolean>(false)
     const [uploadProgress, setUploadProgress] = useState<number>(45)
+    const router = useRouter()
 
-    const {} = useUploadThing("imageUploader", {
+    const { startUpload } = useUploadThing("imageUploader", {
         onClientUploadComplete: (data) => {
+            let configId: string | undefined;            
             
-        } 
+            // Find the first configId from serverData in the array
+            const fileWithConfig = data.find((file) => file.serverData?.configId);
+
+            if (fileWithConfig) {
+                configId = fileWithConfig.serverData.configId;
+                
+                // Perform the transition after setting configId
+                startTransition(() => {
+                    router.push(`/configure/design?id=${configId}`)
+                })
+            } else {
+                console.error("No configId found in the uploaded files.");
+            }
+        },
+        onUploadProgress(p) {
+           setUploadProgress(p) 
+        },
     })
 
-    const onDropRejected = () => {}
-    const onDropAccepted = () => { console.log("accepted") }
+    const onDropRejected = (rejectedFiles: FileRejection[]) => {
+        const [file] = rejectedFiles
+
+        setIsDragOver(false)
+        
+    }
+
+    const onDropAccepted = (acceptedFiles: File[]) => { 
+        startUpload(acceptedFiles, { configId: undefined })
+
+        setIsDragOver(false)
+    }
 
     const isUploading = false
     const [isPending, startTransition] = useTransition()
