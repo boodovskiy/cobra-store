@@ -1,6 +1,7 @@
 'use client'
 
 import { Progress } from '@/components/ui/progress'
+import { useToast } from '@/hooks/use-toast'
 import { useUploadThing } from '@/lib/uploadthing'
 import { cn } from '@/lib/utils'
 import { Image, Loader2Icon, MousePointerSquareDashed } from 'lucide-react'
@@ -9,6 +10,7 @@ import { useState, useTransition } from 'react'
 import Dropzone, { FileRejection } from 'react-dropzone'
 
 const Page = () => {
+    const { toast } = useToast()
     const [isDragOver, setIsDragOver] = useState<boolean>(false)
     const [uploadProgress, setUploadProgress] = useState<number>(45)
     const router = useRouter()
@@ -40,7 +42,11 @@ const Page = () => {
         const [file] = rejectedFiles
 
         setIsDragOver(false)
-        
+        toast({
+            title: `${file.file.type} type is not supported.`,
+            description: "Please choose PNG, JPEG or JPG image instead.",
+            variant: "destructive"
+        })
     }
 
     const onDropAccepted = (acceptedFiles: File[]) => { 
