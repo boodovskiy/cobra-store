@@ -12,7 +12,7 @@ import Dropzone, { FileRejection } from 'react-dropzone'
 const Page = () => {
     const { toast } = useToast()
     const [isDragOver, setIsDragOver] = useState<boolean>(false)
-    const [uploadProgress, setUploadProgress] = useState<number>(45)
+    const [uploadProgress, setUploadProgress] = useState<number>(0)
     const router = useRouter()
 
     const { startUpload, isUploading } = useUploadThing("imageUploader", {
