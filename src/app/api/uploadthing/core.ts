@@ -16,7 +16,7 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      const { configId } = metadata.input
+      const { configId } = metadata.input;
 
       console.log("Upload complete for configId:", configId);
  
