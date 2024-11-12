@@ -15,8 +15,9 @@ const Page = () => {
     const [uploadProgress, setUploadProgress] = useState<number>(45)
     const router = useRouter()
 
-    const { startUpload } = useUploadThing("imageUploader", {
+    const { startUpload, isUploading } = useUploadThing("imageUploader", {
         onClientUploadComplete: (data) => {
+            console.log("Upload data received:", data); // Inspect the received data
             let configId: string | undefined;            
             
             // Find the first configId from serverData in the array
@@ -50,12 +51,13 @@ const Page = () => {
     }
 
     const onDropAccepted = (acceptedFiles: File[]) => { 
-        startUpload(acceptedFiles, { configId: undefined })
-
+        startUpload(acceptedFiles, { configId: "test-config-id" })
+            .catch((error) => {
+                console.error("Error during upload:", error);
+            });
         setIsDragOver(false)
     }
 
-    const isUploading = false
     const [isPending, startTransition] = useTransition()
 
   return (
