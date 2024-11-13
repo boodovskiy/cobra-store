@@ -19,8 +19,6 @@ function splitArray<T>(array: Array<T>, numParts: number){
     const result: Array<Array<T>> = []
 
     for (let i = 0; i < array.length; i++) {
-        const element = array[i];
-        
         const index = i % numParts
         if (!result[index]) {
             result[index] = []
