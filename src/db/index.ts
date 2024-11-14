@@ -1,10 +1,8 @@
 import { PrismaClient } from "@prisma/client"
 
-/* eslint-disable no-var */
 declare global {
     var cachedPrisma: PrismaClient
 }
-/* eslint-enable  no-var */
 
 let prisma: PrismaClient
 if (process.env.NODE_ENV === "production"){
