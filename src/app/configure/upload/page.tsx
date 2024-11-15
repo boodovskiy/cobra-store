@@ -51,7 +51,7 @@ const Page = () => {
     }
 
     const onDropAccepted = (acceptedFiles: File[]) => { 
-        startUpload(acceptedFiles, { configId: "test-config-id" })
+        startUpload(acceptedFiles, { configId: undefined })
             .catch((error) => {
                 console.error("Error during upload:", error);
             });
