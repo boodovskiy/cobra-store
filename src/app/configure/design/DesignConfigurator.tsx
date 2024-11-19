@@ -8,7 +8,7 @@ import { Rnd } from 'react-rnd';
 import HandleComponent from '@/components/HandleComponent';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Radio, RadioGroup } from '@headlessui/react';
-import { COLORS, MODELS } from '@/validators/option-validator'
+import { COLORS, FINISHES, MATERIALS, MODELS } from '@/validators/option-validator'
 import { Label } from '@/components/ui/label';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
@@ -24,9 +24,13 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
     const [options, setOptions] = useState<{
         color: (typeof COLORS)[number]
         model: (typeof MODELS.options)[number]
+        material: (typeof MATERIALS.options)[number]
+        finish: (typeof FINISHES.options)[number]
     }>({
         color: COLORS[0],
         model: MODELS.options[0],
+        material: MATERIALS.options[0],
+        finish: FINISHES.options[0],
     })
 
   return (
@@ -121,6 +125,21 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
+                        {[MATERIALS, FINISHES].map(({name, options: selectableOptions}) => (
+                            <RadioGroup key={name} value={options[name]} 
+                                onChange={(val) => {
+                                    setOptions((prev) => (
+                                        {...prev, 
+                                            //name: material || finish
+                                         [name]: val,
+                                        }
+                                    ))
+                            }}>
+                                <Label>
+                                    {name.slice(0, 1).toUpperCase() + name.slice(1)}
+                                </Label>
+                            </RadioGroup>
+                        ))}
                         </div>
                     </div>
                 </div>

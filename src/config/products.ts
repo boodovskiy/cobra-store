@@ -6,6 +6,6 @@ export const PRODUCT_PRICES = {
     },
     finish: {
         smooth: 0,
-        textured: 3_00,
+        textures: 3_00,
     }
 } as const
