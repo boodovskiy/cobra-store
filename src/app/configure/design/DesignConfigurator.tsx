@@ -68,7 +68,7 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
             </Rnd>
         </div>
 
-        <div className="h-[37.5rem] flex flex-col bg-white">
+        <div className="h-[37.5rem] w-full col-span-full lg:col-span-1 flex flex-col bg-white">
             <ScrollArea className='relative flex-1 overflow-auto'>
                 <div aria-hidden="true" className='absolute z-10 inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white pointer-events-none'/>
                 <div className="px-8 pb-12 pt-8">
