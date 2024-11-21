@@ -51,3 +51,5 @@ export const FINISHES = {
         {label: "Textured Finish", value: "textured", description: "Soft grippy texture", price: PRODUCT_PRICES.finish.textures},
     ]
 } as const
+
+export const BASE_PRICE = 14_00
