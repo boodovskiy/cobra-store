@@ -1,7 +1,7 @@
 'use client'
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import NextImage from 'next/image'
 import { cn, formatPrice } from '@/lib/utils';
 import { Rnd } from 'react-rnd';
@@ -33,11 +33,33 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
         finish: FINISHES.options[0],
     })
 
-  return (
+    const [renderedDimension, setRenderedDimension] = useState({
+        width: imageDimensions.width / 4,
+        height: imageDimensions.height / 4,
+    })
+
+     const [renderedPosition, setRenderedPosition] = useState({
+        x: 150,
+        y: 250,
+     })
+
+     const phoneCaseRef = useRef<HTMLDivElement>(null)
+     const containerRef = useRef<HTMLDivElement>(null)
+
+     async function saveConfiguration() {
+        try {
+            const { left: caseLeft, top: caseTop, width, height } = phoneCaseRef.current!.getBoundingClientRect()
+            
+        } catch (error) {
+            
+        }
+     }
+
+   return (
     <div className='relative mt-20 grid grid-cols-1 lg:grid-cols-3 mb-20 pb-20'>
-        <div className="relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+        <div ref={containerRef} className="relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
             <div className="relative w-60 bg-opacity-50 aspect-[896/1831] overflow-visible pointer-events-none">
-                <AspectRatio ratio={896 / 1831} className='pointer-events-none relative z-50 aspect-[896/1831] w-full'>
+                <AspectRatio ref={phoneCaseRef} ratio={896 / 1831} className='pointer-events-none relative z-50 aspect-[896/1831] w-full'>
                     <NextImage fill alt='phone image' src="/phone-template.png" className='pointer-events-none z-50 select-none'/>
                 </AspectRatio>
                 <div className="absolute z-40 pointer-events-none inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px] shadow-[0_0_0_99999px_rgba(229,231,235,0.6)]" />
@@ -52,6 +74,18 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
                     y: 205,
                     height: imageDimensions.height / 4,
                     width: imageDimensions.width / 4,
+                }}
+                onResizeStop={(_, __, ref, ___, { x, y } ) => {
+                    setRenderedDimension({
+                        height: parseInt(ref.style.height.slice(0, -2)),
+                        width: parseInt(ref.style.width.slice(0, -2))
+                    })
+
+                    setRenderedPosition({ x, y })
+                }}
+                onDragStop={(_, data) => {
+                    const { x, y } = data
+                    setRenderedPosition({ x, y })
                 }}
                 className='absolute z-20 border-[3px] border-primary'
                 lockAspectRatio
