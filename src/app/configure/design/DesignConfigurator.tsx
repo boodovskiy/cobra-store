@@ -13,6 +13,8 @@ import { BASE_PRICE, COLORS, FINISHES, MATERIALS, MODELS } from '@/validators/op
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, ChevronsUpDown } from 'lucide-react';
+import { useUploadThing } from '@/lib/uploadthing';
+import { useToast } from '@/hooks/use-toast';
 
 interface DesignConfiguratorProps {
     configId: string 
@@ -21,6 +23,8 @@ interface DesignConfiguratorProps {
 }
 
 const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConfiguratorProps) => {
+    const { toast } = useToast()
+
     const [options, setOptions] = useState<{
         color: (typeof COLORS)[number]
         model: (typeof MODELS.options)[number]
@@ -45,6 +49,8 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
 
      const phoneCaseRef = useRef<HTMLDivElement>(null)
      const containerRef = useRef<HTMLDivElement>(null)
+
+     const { startUpload } = useUploadThing('imageUploader')
 
      async function saveConfiguration() {
         try {
@@ -81,8 +87,14 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
 
             const blob = base64Blob(base64Data, "image/png")
             const file = new File([blob], "filename.png", { type: 'image/png' })
+
+            await startUpload([file], {configId})
         } catch (error) {
-            
+            toast({
+                title: "Something went wrong",
+                description: "There was a problem saving your config, please try again.",
+                variant: "destructive",
+            })
         }
      }
 
@@ -263,7 +275,11 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
                         <p className='font-medium whitespace-nowrap'>
                             {formatPrice( (BASE_PRICE + options.finish.price + options.material.price) / 100 )}
                         </p>
-                        <Button size="sm" className='w-full'>
+                        <Button
+                            onClick={ () => saveConfiguration() }
+                            size="sm" 
+                            className='w-full'
+                        >
                             Continue
                             <ArrowRight className='h-4 w-4 ml-1.5 inline'/>
                         </Button>
