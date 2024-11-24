@@ -15,6 +15,9 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Check, ChevronsUpDown } from 'lucide-react';
 import { useUploadThing } from '@/lib/uploadthing';
 import { useToast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
+import { SaveConfigArgs, saveConfig as _saveConfig } from './action';
+import { useRouter } from 'next/navigation';
 
 interface DesignConfiguratorProps {
     configId: string 
@@ -24,6 +27,24 @@ interface DesignConfiguratorProps {
 
 const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConfiguratorProps) => {
     const { toast } = useToast()
+    const router = useRouter()
+
+    const {mutate: saveConfig} = useMutation({
+        mutationKey: ['save-config'],
+        mutationFn: async (args: SaveConfigArgs) => {
+            await Promise.all([saveConfiguration(), _saveConfig(args)])
+        },
+        onError: () => {
+            toast({
+                title:  "Something went wrong.",
+                description: "There was error on our end. Please try again.",
+                variant: "destructive"
+            })
+        },
+        onSuccess: () => {
+            router.push(`/configure/preview?id=${configId}`)
+        },
+    })
 
     const [options, setOptions] = useState<{
         color: (typeof COLORS)[number]
