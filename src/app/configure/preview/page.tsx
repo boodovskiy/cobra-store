@@ -20,7 +20,7 @@ const Page = async ({ searchParams }: PageProps) => {
     if (!configuration) return notFound();
 
   return (
-    <DesignPreview configuration={configuration} />
+    <DesignPreview />
   )
 }
 
