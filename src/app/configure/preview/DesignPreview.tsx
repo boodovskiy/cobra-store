@@ -1,11 +1,12 @@
 'use client'
 
 import Phone from '@/components/Phone'
+import { Button } from '@/components/ui/button'
 import { PRODUCT_PRICES } from '@/config/products'
 import { cn, formatPrice } from '@/lib/utils'
 import { BASE_PRICE, COLORS, MODELS } from '@/validators/option-validator'
 import { Configuration } from '@prisma/client'
-import { Check } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-dom-confetti'
 
@@ -17,6 +18,10 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const tw = COLORS.find((supportedColor)  => supportedColor.value === color)?.tw
 
     const {label: modelLabel} = MODELS.options.find(({value}) => value === model )!
+
+    let totalPrice = BASE_PRICE
+    if (material === "polycarbonate") totalPrice += PRODUCT_PRICES.material.polycarbonate 
+    if (finish === "textured") totalPrice += PRODUCT_PRICES.finish.textured
 
   return (
     <>
@@ -80,7 +85,20 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
                                     <p className='font-medium text-gray-900'>{formatPrice(PRODUCT_PRICES.material.polycarbonate / 100)}</p>
                                 </div>
                             ) : null}
+
+                            <div className="my-2 h-px bg-gray-200">
+                                <div className="flex items-center justify-between py-2">
+                                    <p className='font-semibold text-gray-900'>Order Total</p>
+                                    <p className="font-semibold text-gray-900">{formatPrice(totalPrice / 100)}</p>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div className="mt-8 flex justify-end pb-12">
+                            <Button className='px-4 sm:px-6 lg:px-8'>
+                                Checkout <ArrowRight className='h-4 w-4 ml-1.5 inline'/>
+                            </Button>
                     </div>
                 </div>
             </div>
