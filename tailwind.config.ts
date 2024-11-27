@@ -69,11 +69,16 @@ const config: Config = {
 				to: {
 					opacity: "1"
 				},
+			},
+			flashing: {
+				'0%, 100%': {opacity: '0.2'},
+				'20%': {opacite: '1'},
 			}
 		},
 		animation: {
 			"marquee": 'marquee var(--marquee-duration) linear infinite',
-			"fade-in": 'fade-in 0.5s linear forwards'
+			"fade-in": 'fade-in 0.5s linear forwards',
+			flashing: "flashing 1.4s infinite linear",
 		}
   	}
   },
