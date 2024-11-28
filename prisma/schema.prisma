@@ -73,7 +73,7 @@ model Order {
   userId            String
   amount            Float
   isPaid            Boolean     @default(false)
-  status            OrderStatus
+  status            OrderStatus @default(awaiting_shipment)
   shippingAddressId String?
   billingAddressId  String?
   createdAt         DateTime    @default(now())
