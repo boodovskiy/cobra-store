@@ -1,12 +1,9 @@
 import { db } from "@/db";
 import { stripe } from "@/lib/stripe";
+import { Shojumaru } from "next/font/google";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { Resend } from 'resend'
-import OrderReceivedEmail from "@/components/emails/OrderReceivedEmail";
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
     try {
@@ -36,7 +33,7 @@ export async function POST(req: NextRequest) {
             const billingAddress = session.customer_details!.address
             const shippingAddress = session.shipping_details!.address
 
-            const updatedOrder = await db.order.update({
+            await db.order.update({
                 where: {
                     id: orderId,
                 },
@@ -64,44 +61,16 @@ export async function POST(req: NextRequest) {
                     },
                 },
             })
-
-            await resend.emails.send({
-                from: "CobraStore <budovskiy@specialcase.net>",
-                to: [event.data.object.customer_details.email],
-                subject: "Thanks for your order!",
-                react: OrderReceivedEmail({
-                    orderId,
-                    orderDate: updatedOrder.createdAt.toLocaleDateString(),
-                    // @ts-expect-error: TypeScript cannot infer the correct type for shippingAddress here
-                    shippingAddress: {
-                        name: session.customer_details!.name!,
-                        city: shippingAddress!.city!,
-                        country: shippingAddress!.country!,
-                        postalCode: shippingAddress!.postal_code!,
-                        street: shippingAddress!.line1!,
-                        state: shippingAddress!.state
-                    },
-                })
-            })
         }
 
         return NextResponse.json({ result: event, ok: true })
 
     } catch (error) {
-        if (error instanceof Error) {
-            // Standard error object
-            console.error("Webhook Error:", error.message, error.stack);
-            return NextResponse.json(
-                { message: error.message, ok: false },
-                { status: 500 }
-            );
-        } else {
-            // Handle non-standard errors (e.g., strings or other unexpected types)
-            console.error("Unexpected Error:", error);
-            return NextResponse.json(
-                { message: "An unknown error occurred.", ok: false },
-                { status: 500 }
-            );
-        }
+        console.error(error)
+
+        return NextResponse.json(
+            { message: "Something went wrong.", ok: false },
+            { status: 500 }
+        )
     }
 }
