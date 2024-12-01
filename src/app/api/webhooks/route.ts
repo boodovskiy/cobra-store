@@ -1,6 +1,5 @@
 import { db } from "@/db";
 import { stripe } from "@/lib/stripe";
-import { Shojumaru } from "next/font/google";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";

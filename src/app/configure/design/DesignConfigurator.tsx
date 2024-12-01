@@ -110,7 +110,7 @@ const DesignConfigurator = ( { configId, imageUrl, imageDimensions }: DesignConf
             const file = new File([blob], "filename.png", { type: 'image/png' })
 
             await startUpload([file], {configId})
-        } catch (error) {
+        } catch {
             toast({
                 title: "Something went wrong",
                 description: "There was a problem saving your config, please try again.",
