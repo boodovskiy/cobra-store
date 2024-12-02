@@ -3,9 +3,7 @@ const nextConfig = {
     images: {
         domains: ["utfs.io"]
     },
-    experimental: {
-        outputStandalone: true,
-    },
+    output: 'standalone',
 };
 
 export default nextConfig;
