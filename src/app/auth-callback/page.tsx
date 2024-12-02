@@ -1,4 +1,6 @@
 'use client'
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
 
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
@@ -6,7 +8,6 @@ import { getAuthStatus } from "./action"
 import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 
-export const dynamic = "force-dynamic" //temporary solution
 
 const Page = () => {
     const [configId, setConfigId] = useState<string | null>(null)
