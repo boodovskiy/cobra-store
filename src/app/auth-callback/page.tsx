@@ -6,6 +6,8 @@ import { getAuthStatus } from "./action"
 import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 
+export const dynamic = "force-dynamic" //temporary solution
+
 const Page = () => {
     const [configId, setConfigId] = useState<string | null>(null)
     const router = useRouter()
