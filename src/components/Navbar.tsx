@@ -22,7 +22,7 @@ const Navbar = async () => {
                 <div className="h-full flex items-center space-x-4">
                     {user ? (
                         <>
-                            <Link href='/api/auth/logout' className={buttonVariants({
+                            <Link href='/api/auth/logout' prefetch={false} className={buttonVariants({
                                 size: 'sm',
                                 variant: 'ghost',
                             })}>
@@ -48,14 +48,15 @@ const Navbar = async () => {
                         </>
                     ) : (
                         <>
-                            <Link href='/api/auth/register' className={buttonVariants({
+                            <Link href='/api/auth/register' prefetch={false} className={buttonVariants({
                                 size: 'sm',
                                 variant: 'ghost',
+                                
                             })}>
                                 Sign up
                             </Link>
 
-                            <Link href='/api/auth/login' className={buttonVariants({
+                            <Link href='/api/auth/login' prefetch={false} className={buttonVariants({
                                 size: 'sm',
                                 variant: 'ghost',
                             })}>
