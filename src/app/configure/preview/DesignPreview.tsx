@@ -26,8 +26,10 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const [showConfetti, setShowConfetti] = useState<boolean>(false)
 
     useEffect(() => {
+        console.log('isLoading:', isLoading);
+        console.log('isAuthenticated:', isAuthenticated);
+    
         if (!isLoading && isAuthenticated) {
-            // Perform actions when the Kinde client is ready
             console.log('Kinde client is ready');
             console.log('User:', getUser());
             console.log('Access Token:', getAccessToken());
