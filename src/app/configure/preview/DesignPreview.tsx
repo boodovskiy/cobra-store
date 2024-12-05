@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
+import { KindeUser } from '@kinde-oss/kinde-auth-nextjs/types'
 
 const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const router = useRouter()
@@ -22,7 +23,7 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const { id } = configuration
     const { getUser } = useKindeBrowserClient()
     const [ isLoginModalOpen, setIsLoginModalOpen ] = useState<boolean>(false)
-    const [user, setUser] = useState<any>(null)
+    const [user, setUser] = useState<KindeUser<Record<string, string>> | null>(null)
     const [showConfetti, setShowConfetti] = useState<boolean>(false)
 
     useEffect(() => setShowConfetti(true))
