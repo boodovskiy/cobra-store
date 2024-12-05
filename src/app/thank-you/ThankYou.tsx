@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getPaymentStatus } from "./actions"
 import { useSearchParams } from "next/navigation"
 import { Divide, Loader2 } from "lucide-react"
+import PhonePreview from "@/components/PhonePreview"
 
 const ThankYou = () => {
     const searchParams = useSearchParams()
@@ -69,7 +70,7 @@ const ThankYou = () => {
             </div>
 
             <div className="flex space-x-6 overflow-hidden mt-4 rounded-xl bg-gray-900/5 ring-1 ring-inset ring-gray-900/10 lg:rounded-2xl">
-                
+                <PhonePreview color={color!} croppedImageUrl={configuration.croppedImageUrl!}/>
             </div>
         </div>
     </div>
