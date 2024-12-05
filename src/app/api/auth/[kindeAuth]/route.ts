@@ -1,2 +1,8 @@
 import {handleAuth} from "@kinde-oss/kinde-auth-nextjs/server";
-export const GET = handleAuth();
+
+const authOptions = {
+    cookieSameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    cookieSecure: process.env.NODE_ENV === "production",
+};
+
+export const GET = handleAuth(authOptions);
