@@ -20,17 +20,10 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const router = useRouter()
     const { toast } = useToast()
     const { id } = configuration
-    const { user } = useKindeBrowserClient()
+    const { user, isAuthenticated, isLoading, getUser, getAccessToken } = useKindeBrowserClient()
     const [ isLoginModalOpen, setIsLoginModalOpen ] = useState<boolean>(false)
 
     const [showConfetti, setShowConfetti] = useState<boolean>(false)
-
-    const {
-        isAuthenticated,
-        isLoading,
-        getUser,
-        getAccessToken,
-    } = useKindeBrowserClient();
 
     useEffect(() => {
         if (!isLoading && isAuthenticated) {
