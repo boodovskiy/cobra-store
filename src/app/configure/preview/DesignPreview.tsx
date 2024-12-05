@@ -24,6 +24,23 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const [ isLoginModalOpen, setIsLoginModalOpen ] = useState<boolean>(false)
 
     const [showConfetti, setShowConfetti] = useState<boolean>(false)
+
+    const {
+        isAuthenticated,
+        isLoading,
+        getUser,
+        getAccessToken,
+    } = useKindeBrowserClient();
+
+    useEffect(() => {
+        if (!isLoading && isAuthenticated) {
+            // Perform actions when the Kinde client is ready
+            console.log('Kinde client is ready');
+            console.log('User:', getUser());
+            console.log('Access Token:', getAccessToken());
+        }
+    }, [isLoading, isAuthenticated, getUser, getAccessToken]);
+
     useEffect(() => setShowConfetti(true))
 
     const { color, model, finish, material } = configuration
