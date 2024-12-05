@@ -20,21 +20,10 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const router = useRouter()
     const { toast } = useToast()
     const { id } = configuration
-    const { user, isAuthenticated, isLoading, getUser, getAccessToken } = useKindeBrowserClient()
+    const { user } = useKindeBrowserClient()
     const [ isLoginModalOpen, setIsLoginModalOpen ] = useState<boolean>(false)
 
     const [showConfetti, setShowConfetti] = useState<boolean>(false)
-
-    useEffect(() => {
-        console.log('isLoading:', isLoading);
-        console.log('isAuthenticated:', isAuthenticated);
-    
-        if (!isLoading && isAuthenticated) {
-            console.log('Kinde client is ready');
-            console.log('User:', getUser());
-            console.log('Access Token:', getAccessToken());
-        }
-    }, [isLoading, isAuthenticated, getUser, getAccessToken]);
 
     useEffect(() => setShowConfetti(true))
 
@@ -62,9 +51,6 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
              })
          }
     })
-
-    console.log('user from Design Preview')
-    console.log(user)
 
     const handleCheckout = () => {
         if (user) {
