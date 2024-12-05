@@ -1,11 +1,11 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
-import { getPaymentStatus } from "./actions"
-import { useSearchParams } from "next/navigation"
-import { Divide, Loader2 } from "lucide-react"
 import PhonePreview from "@/components/PhonePreview"
 import { formatPrice } from "@/lib/utils"
+import { useQuery } from "@tanstack/react-query"
+import { Loader2 } from "lucide-react"
+import { useSearchParams } from "next/navigation"
+import { getPaymentStatus } from "./actions"
 
 const ThankYou = () => {
     const searchParams = useSearchParams()
