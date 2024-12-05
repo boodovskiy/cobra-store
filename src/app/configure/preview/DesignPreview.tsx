@@ -20,19 +20,12 @@ const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const router = useRouter()
     const { toast } = useToast()
     const { id } = configuration
-    const { user, getUser, isAuthenticated, isLoading } = useKindeBrowserClient()
+    const { user } = useKindeBrowserClient()
     const [ isLoginModalOpen, setIsLoginModalOpen ] = useState<boolean>(false)
 
     const [showConfetti, setShowConfetti] = useState<boolean>(false)
 
     useEffect(() => setShowConfetti(true))
-
-    const alsoUser = getUser();
-
-    console.log('isLoading:', isLoading);
-    console.log('isAuthenticated:', isAuthenticated);
-    console.log('User:', user);
-    console.log('User:', alsoUser);
 
     const { color, model, finish, material } = configuration
     const tw = COLORS.find((supportedColor)  => supportedColor.value === color)?.tw
