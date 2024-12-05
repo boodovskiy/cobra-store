@@ -16,18 +16,30 @@ import { useToast } from '@/hooks/use-toast'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
 
-const DesignPreview = async ({configuration}: { configuration: Configuration }) => {
+const DesignPreview = ({configuration}: { configuration: Configuration }) => {
     const router = useRouter()
     const { toast } = useToast()
     const { id } = configuration
     const { getUser } = useKindeBrowserClient()
     const [ isLoginModalOpen, setIsLoginModalOpen ] = useState<boolean>(false)
-
+    const [user, setUser] = useState<any>(null)
     const [showConfetti, setShowConfetti] = useState<boolean>(false)
 
     useEffect(() => setShowConfetti(true))
 
-    const user = await getUser();
+    useEffect(() => {
+        const fetchUser = async () => {
+          try {
+            const fetchedUser = await getUser()
+            setUser(fetchedUser) // Store the user data in state
+          } catch (error) {
+            console.error('Error fetching user:', error)
+          }
+        }
+    
+        fetchUser()
+      }, []) // Empty dependency array to run only once on mount
+
     const { color, model, finish, material } = configuration
     const tw = COLORS.find((supportedColor)  => supportedColor.value === color)?.tw
 
