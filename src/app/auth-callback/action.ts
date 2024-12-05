@@ -22,5 +22,5 @@ export const getAuthStatus = async () => {
         })
     }
 
-    return { success: true }
+    return { success: true, user: user }
 }
