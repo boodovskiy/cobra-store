@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
                 react: OrderReceivedEmail({
                     orderId,
                     orderDate: updatedOrder.createdAt.toLocaleDateString(),
-                    // @ts-ignore
+                    // @ts-expect-error: TypeScript cannot infer the correct type for shippingAddress here
                     shippingAddress: {
                         name: session.customer_details!.name!,
                         city: shippingAddress!.city!,
