@@ -21,6 +21,18 @@ const Footer = () => {
                         <Link href='#' className='text-sm text-muted-foreground hover:text-gray-700'>Cookie Policy</Link>
                     </div>
                 </div>
+                <div className="text-center md:text-right mt-2 md:mt-0">
+                    <p className="text-sm text-muted-foreground">
+                        Built by{' '}
+                        <Link
+                            href="https://specialcase.net/"
+                            target="_blank"
+                            className="hover:text-gray-700 underline"
+                        >
+                            SpecialCase
+                        </Link>
+                    </p>
+                </div>
             </div>
         </MaxWidthWrapper>
     </footer>

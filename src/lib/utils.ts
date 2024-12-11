@@ -42,5 +42,6 @@ export function constructMetadata({
          creator: "@boodovsky"
       },
       icons,
+      metadataBase: new URL("https://cobra-store-one.vercel.app/")
     }
 }
