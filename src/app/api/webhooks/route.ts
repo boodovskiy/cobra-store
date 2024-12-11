@@ -88,11 +88,20 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ result: event, ok: true })
 
     } catch (error) {
-        console.error(error)
-
-        return NextResponse.json(
-            { message: "Something went wrong.", ok: false },
-            { status: 500 }
-        )
+        if (error instanceof Error) {
+            // Standard error object
+            console.error("Webhook Error:", error.message, error.stack);
+            return NextResponse.json(
+                { message: error.message, ok: false },
+                { status: 500 }
+            );
+        } else {
+            // Handle non-standard errors (e.g., strings or other unexpected types)
+            console.error("Unexpected Error:", error);
+            return NextResponse.json(
+                { message: "An unknown error occurred.", ok: false },
+                { status: 500 }
+            );
+        }
     }
 }
