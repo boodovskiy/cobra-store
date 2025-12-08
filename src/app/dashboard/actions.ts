@@ -2,6 +2,7 @@
 
 import { db } from "@/db"
 import { OrderStatus } from "@prisma/client"
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 
 export const changeOrderStatus = async ({
     id,
@@ -10,6 +11,13 @@ export const changeOrderStatus = async ({
     id: string,
     newStatus: OrderStatus
 }) => {
+    const { getUser } = getKindeServerSession()
+    const user = await getUser()
+
+    if (!user || user.email !== process.env.ADMIN_EMAIL) {
+        throw new Error("Unauthorized")
+    }
+
     await db.order.update({
         where: {id}, 
         data: {status: newStatus},

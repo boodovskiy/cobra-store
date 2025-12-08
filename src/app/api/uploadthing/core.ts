@@ -2,6 +2,7 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { z } from 'zod';
 import sharp from 'sharp';
 import { db } from "@/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
  
 const f = createUploadthing();
  
@@ -13,7 +14,14 @@ export const ourFileRouter = {
     // Set permissions and file types for this FileRoute
     .middleware(async ({ input }) => {
       // This code runs on your server before upload
-        return { input }
+      const { getUser } = getKindeServerSession()
+      const user = await getUser()
+
+      if (!user?.id) {
+        throw new Error("Unauthorized")
+      }
+
+      return { userId: user.id, input }
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
