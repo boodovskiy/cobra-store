@@ -8,5 +8,5 @@ export const config = {
     "/configure/:path*",
     "/thank-you/:path*",
     "/api/uploadthing/:path*",
-  ],
+  ]
 };
